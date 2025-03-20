@@ -11,4 +11,7 @@ test_data = {
 
 test_df = pd.DataFrame(test_data, columns = ['Name','Caseworker','City'])
 
-print(test_df)
+# print(test_df)
+
+sampledtest_df = test_df.sample(n=3)
+print(sampledtest_df)
