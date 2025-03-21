@@ -16,12 +16,12 @@ try:
     with open(input_file, "r") as f:
         lines = f.readlines()
         print(f"Debug: File contents: {lines}")  # Show what’s read in console
-        if len(lines) < 5:
-            raise ValueError(f"Input file has {len(lines)} lines, expected 5.") #There should be 5 exact lines for input
+        if len(lines) < 4:
+            raise ValueError(f"Input file has {len(lines)} lines, expected 4.") #There should be 5 exact lines for input
         
         REPORT_DIRECTORY = lines[0].strip()
-        sample_size = lines[1].strip()
-        sample_data = int(lines[2].strip())  # This must be a number
+        sample_size = int(lines[1].strip())# This must be a number
+        sample_data = lines[2].strip()
         OUTPUT_DIRECTORY = lines[3].strip()
         print(f"Debug: Parsed inputs: {REPORT_DIRECTORY}, {sample_size}, {sample_data}, {OUTPUT_DIRECTORY}") 
 
@@ -53,7 +53,7 @@ def random_audit(dataframe: str, sample_size: int, sampled_data: str) -> str:
         
         print(sampled_df)
         
-        full_file_path = os.path.join(OUTPUT_DIRECTORY, sampled_data)
+        full_file_path = os.path.join(OUTPUT_DIRECTORY, f"{sampled_data}.xlsx")
         sampled_df.to_excel(full_file_path, index = False)
         print(f"DataFrame saved to {full_file_path}")
         
@@ -69,4 +69,4 @@ def random_audit(dataframe: str, sample_size: int, sampled_data: str) -> str:
 df = pd.read_excel(REPORT_DIRECTORY)
 df.fillna('N/A', inplace=True)
 
-random_audit(df,3,"test.xlsx")
+random_audit(df,sample_size,sample_data)

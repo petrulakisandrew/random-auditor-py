@@ -5,10 +5,10 @@ import os
 
 def save_inputs():
     # Get values from the entry fields
-    report_directory = entry_file.get()
+    REPORT_DIRECTORY = entry_file.get()
     sample_size = entry_sample.get()
     sampled_data = entry_sampled_data.get()
-    output_directory = entry_output_dir.get()
+    OUTPUT_DIRECTORY = entry_output_dir.get()
 
     # Try converting sample_size to an integer
     try:
@@ -23,7 +23,7 @@ def save_inputs():
     
     try:
         with open(file_path, "w") as f:
-            f.write(f"{report_directory}\n{sample_size}\n{sampled_data}\n{output_directory}")
+            f.write(f"{REPORT_DIRECTORY}\n{sample_size}\n{sampled_data}\n{OUTPUT_DIRECTORY}")
         print(f"Successfully saved inputs to: {file_path}")
     except Exception as e:
         print(f"Error saving file: {e}")
