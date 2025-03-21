@@ -3,6 +3,7 @@ import pandas as pd
 
 
 REPORT_DIRECTORY = 'C:/Users/Andrew Petrulakis/Desktop/Reports/SEMAP/SEMAP 1/DHA/2025/Raw Data/July 24.xlsx'
+OUTPUT_DIRECTORY = 'C:/Users/Andrew Petrulakis/Desktop/Reports/SEMAP/SEMAP 1/DHA/2025/Sampled Data/'
 
 def random_audit(dataframe: str, sample_size: int, sampled_data: str) -> str:
     """ Generate a random sample based on excel column criteria.
@@ -22,6 +23,10 @@ def random_audit(dataframe: str, sample_size: int, sampled_data: str) -> str:
         sampled_df = dataframe.sample(n=sample_size)
         
         print(sampled_df)
+        
+        full_file_path = os.path.join(OUTPUT_DIRECTORY, sampled_data)
+        sampled_df.to_excel(full_file_path, index = False)
+        print(f"DataFrame saved to {full_file_path}")
         
     except FileNotFoundError:
         return "Error: The specified Excel file could not be found. Please check the file path."
