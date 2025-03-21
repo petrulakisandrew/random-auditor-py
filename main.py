@@ -1,9 +1,38 @@
 import os
 import pandas as pd 
+import subprocess
 
 
-REPORT_DIRECTORY = 'C:/Users/Andrew Petrulakis/Desktop/Reports/SEMAP/SEMAP 1/DHA/2025/Raw Data/July 24.xlsx'
-OUTPUT_DIRECTORY = 'C:/Users/Andrew Petrulakis/Desktop/Reports/SEMAP/SEMAP 1/DHA/2025/Sampled Data/'
+# REPORT_DIRECTORY = 'C:/Users/Andrew Petrulakis/Desktop/Reports/SEMAP/SEMAP 1/DHA/2025/Raw Data/July 24.xlsx'
+# OUTPUT_DIRECTORY = 'C:/Users/Andrew Petrulakis/Desktop/Reports/SEMAP/SEMAP 1/DHA/2025/Sampled Data/'
+
+# Run the GUI script first to collect the inputs
+subprocess.run(["python", "C:/Users/Andrew Petrulakis/Development/random-auditor-py/Input_GUI.py"], check=True)
+
+# After the GUI finishes, read the input values from the text file
+input_file = os.path.join(os.path.dirname(__file__), "input_values.txt")  
+
+try:
+    with open(input_file, "r") as f:
+        lines = f.readlines()
+        print(f"Debug: File contents: {lines}")  # Show what’s read in console
+        if len(lines) < 5:
+            raise ValueError(f"Input file has {len(lines)} lines, expected 5.") #There should be 5 exact lines for input
+        
+        REPORT_DIRECTORY = lines[0].strip()
+        sample_size = lines[1].strip()
+        sample_data = int(lines[2].strip())  # This must be a number
+        OUTPUT_DIRECTORY = lines[3].strip()
+        print(f"Debug: Parsed inputs: {REPORT_DIRECTORY}, {sample_size}, {sample_data}, {OUTPUT_DIRECTORY}") 
+
+except FileNotFoundError:
+    print(f"Error: The file {input_file} was not found.")
+except ValueError as ve:
+    print(f"Value error: {ve}")
+except Exception as e:
+    print(f"An unexpected error occurred: {e}")
+    
+
 
 def random_audit(dataframe: str, sample_size: int, sampled_data: str) -> str:
     """ Generate a random sample based on excel column criteria.
