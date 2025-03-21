@@ -19,9 +19,9 @@ def random_audit(dataframe: str, sample_size: int, sampled_data: str) -> str:
                 f"Sample size ({sample_size}) cannot be greater than the ppulation size ({len(dataframe)})."
             )
         
-        test_df = random_audit(dataframe,sample_size,sampled_data)
+        sampled_df = dataframe.sample(n=sample_size)
         
-        print(test_df)
+        print(sampled_df)
         
     except FileNotFoundError:
         return "Error: The specified Excel file could not be found. Please check the file path."
@@ -35,10 +35,4 @@ def random_audit(dataframe: str, sample_size: int, sampled_data: str) -> str:
 df = pd.read_excel(REPORT_DIRECTORY)
 df.fillna('N/A', inplace=True)
 
-sampledtest_df = df.sample(n=3)
-print(sampledtest_df)
-
-
-# random_audit(df,5,'test_df.xlsx')
-# sampledtest_df = test_df.sample(n=3)
-# print(sampledtest_df)
+random_audit(df,3,"test.xlsx")
